@@ -1,0 +1,135 @@
+pytest is a popular testing framework for Python that simplifies the process of writing and executing unit tests. Here are some basic examples of how to use pytest for testing Python code:
+
+1. Install pytest:
+
+You can install pytest using pip:
+
+bash
+
+pip install pytest
+
+2. Writing Test Functions:
+
+Create test functions using the test_ prefix to indicate that they are test cases. Here's an example of a simple test function for testing a mathematical function:
+
+python
+
+# code.py
+def add(a, b):
+    return a + b
+
+# test_code.py
+import pytest
+from code import add
+
+def test_add():
+    result = add(2, 3)
+    assert result == 5
+
+3. Running Tests:
+
+You can run your tests by simply executing pytest from the command line while inside the directory containing your test files:
+
+bash
+
+pytest
+
+pytest will automatically discover and run all the test functions in files that match the test_*.py or *_test.py naming pattern.
+
+4. Test Discovery and Organization:
+
+pytest discovers and runs tests automatically. You can organize your tests into test classes or modules. For example:
+
+python
+
+# test_math.py
+import pytest
+from math_functions import add, subtract
+
+class TestMathFunctions:
+    def test_add(self):
+        result = add(5, 3)
+        assert result == 8
+
+    def test_subtract(self):
+        result = subtract(10, 4)
+        assert result == 6
+
+5. Running Specific Tests:
+
+You can run specific tests by specifying the test file and function:
+
+bash
+
+pytest test_math.py::TestMathFunctions::test_add
+
+6. Skipping Tests:
+
+You can skip a test using the @pytest.mark.skip decorator:
+
+python
+
+import pytest
+
+@pytest.mark.skip(reason="Test not ready yet")
+def test_function_to_skip():
+    assert False
+
+7. Parametrized Tests:
+
+You can run the same test with multiple sets of inputs using parametrized tests:
+
+python
+
+import pytest
+from math_functions import add
+
+@pytest.mark.parametrize("a, b, expected", [(2, 3, 5), (0, 0, 0), (-1, 1, 0)])
+def test_add(a, b, expected):
+    result = add(a, b)
+    assert result == expected
+
+8. Testing Exceptions:
+
+You can test whether a specific exception is raised in your code using the pytest.raises context manager:
+
+python
+
+import pytest
+
+def test_divide_by_zero():
+    with pytest.raises(ZeroDivisionError):
+        result = 1 / 0
+
+9. Fixtures:
+
+Fixtures are reusable setup and teardown functions for tests. They help set up the test environment. Here's an example:
+
+python
+
+import pytest
+
+@pytest.fixture
+def sample_data():
+    data = ["Alice", "Bob", "Charlie"]
+    return data
+
+def test_sample_data(sample_data):
+    assert "Alice" in sample_data
+    assert "David" not in sample_data
+
+10. Running with Coverage:
+
+You can measure test coverage using the pytest-cov plugin. First, install it:
+
+bash
+
+pip install pytest-cov
+
+Then, run your tests with coverage information:
+
+bash
+
+pytest --cov=your_module tests/
+
+These are basic examples of how to use pytest for testing Python code. pytest is a versatile framework with many features for advanced testing, including plugins for test fixtures, parameterization, and more. Be sure to check the official documentation for more information: pytest Documentation.
